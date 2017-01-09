@@ -24,7 +24,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/til_name"
+                android:id="@+id/tilName"
                 app:errorEnabled="true">
 
             <EditText
@@ -39,8 +39,8 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/til_description"
-                android:layout_below="@id/til_name"
+                android:id="@+id/tilDescription"
+                android:layout_below="@id/tilName"
                 app:errorEnabled="true">
 
             <EditText
@@ -55,8 +55,8 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/til_dosage"
-                android:layout_below="@id/til_description"
+                android:id="@+id/tilDosage"
+                android:layout_below="@id/tilDescription"
                 app:errorEnabled="true">
 
             <EditText
@@ -71,8 +71,8 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/til_brand"
-                android:layout_below="@id/til_dosage"
+                android:id="@+id/tilBrand"
+                android:layout_below="@id/tilDosage"
                 app:errorEnabled="true">
 
             <EditText
@@ -88,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/til_price"
-                android:layout_below="@id/til_brand"
+                android:layout_below="@id/tilBrand"
                 app:errorEnabled="true">
 
             <EditText

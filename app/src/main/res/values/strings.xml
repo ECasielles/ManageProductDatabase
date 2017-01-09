@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ManageProductsFragment</string>
+    <string name="app_name">ManageProductsDatabase</string>
     <string name="action_add_product">Nuevo producto</string>
     <string name="action_delete_product">Eliminar producto</string>
     <string name="action_sort_alphabetically">Ordenar</string>

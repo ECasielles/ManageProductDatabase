@@ -1,5 +1,7 @@
 package com.example.usuario.manageproductsdatabase.repository;
 
+import android.app.Application;
+
 import com.example.usuario.manageproductsdatabase.R;
 import com.example.usuario.manageproductsdatabase.model.Product;
 
@@ -8,11 +10,11 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class ProductRepository {
+public class ProductRepository extends Application {
     private static ProductRepository repository;
     private ArrayList<Product> products;
 
-    private ProductRepository() {
+    public ProductRepository() {
         this.products = new ArrayList<>();
         addProduct(new Product("ABILIFY", "5 MG 28 COMPRIMIDOS", "5 mg", "BRISTOL MYERS SQUIBB", 132.79, 10, R.drawable.pill));
         addProduct(new Product("BETADINE", "10% 5 MONODOSIS 10 MG", "10 MG", "MEDA PHARMA SAU", 5.87, 150, R.drawable.pill));

@@ -27,5 +27,4 @@
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
-    <color name="colorError">#FFAAFF</color>
 </resources>

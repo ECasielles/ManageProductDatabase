@@ -3,31 +3,28 @@
     package="com.example.usuario.manageproductsdatabase">
 
     <application
-        android:name="com.example.usuario.manageproductsdatabase.activity.LoginActivity"
+        android:name=".repository.ProductRepository"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.example.usuario.manageproductsdatabase.activity.LoginActivity"
+            android:name=".activity.LoginActivity"
             android:windowSoftInputMode="adjustPan"
             >
-        </activity>
-        <activity android:name="com.example.usuario.manageproductsdatabase.fragment.ListProductFragment" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.usuario.manageproductsdatabase.activity.AccountSettingsActivity" />
-        <activity android:name="com.example.usuario.manageproductsdatabase.activity.GeneralSettingsActivity" />
+        <activity android:name=".activity.AccountSettingsActivity" />
+        <activity android:name=".activity.GeneralSettingsActivity" />
         <activity
-            android:name="com.example.usuario.manageproductsdatabase.activity.SignupActivity"
+            android:name=".activity.SignupActivity"
             android:windowSoftInputMode="adjustPan"
             />
-        <activity android:name="com.example.usuario.manageproductsdatabase.fragment.ManageProductFragment" />
     </application>
 
 </manifest>

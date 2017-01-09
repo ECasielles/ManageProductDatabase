@@ -29,7 +29,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tilManageDetails"
+        android:id="@+id/tilManageDescription"
         android:layout_below="@id/tilManageName" >
 
         <EditText
@@ -45,8 +45,8 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tilManageDose"
-        android:layout_below="@id/tilManageDetails" >
+        android:id="@+id/tilManageDosage"
+        android:layout_below="@id/tilManageDescription" >
 
         <EditText
             android:layout_width="match_parent"
@@ -62,7 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tilManageBrand"
-        android:layout_below="@id/tilManageDose" >
+        android:layout_below="@id/tilManageDosage" >
 
         <EditText
             android:layout_width="match_parent"

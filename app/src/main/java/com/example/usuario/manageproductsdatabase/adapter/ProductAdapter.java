@@ -68,8 +68,6 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         return view;
     }
 
-
-
     public void sortAlphabetically() {
         if(!SORTED_ASC) {
             sort(Product.NAME_COMPARATOR);
@@ -101,16 +99,21 @@ public class ProductAdapter extends ArrayAdapter<Product> {
                 return i;
         return -1;
     }
-    //TODO
-    public void updateProduct (List<Product> products){
+
+    public void updateProduct (Product product){
+        Product productOld = getItem(product.getmId());
+        productOld = product;
+        notifyDataSetChanged();
     }
 
     public void deleteProduct(Product product) {
         remove(product);
+        notifyDataSetChanged();
     }
 
     public void deleteProduct() {
         clear();
+        notifyDataSetChanged();
     }
 
     class ProductHolder {
