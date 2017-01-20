@@ -56,8 +56,8 @@ public final class ManageProductContract {
                 COLUMN_PRICE,
                 COLUMN_STOCK,
                 COLUMN_IMAGE,
-                COLUMN_IDCATEGORY,
-                REFERENCE_ID_CATEGORY);
+                COLUMN_IDCATEGORY, REFERENCE_ID_CATEGORY
+        );
         public static final String SQL_DELETE_ENTRIES = String.format(
                 "DROP TABLE IF EXISTS %s", TABLE_NAME);
     }
@@ -68,7 +68,8 @@ public final class ManageProductContract {
                 " CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "%s TEXT NOT NULL)",
                 TABLE_NAME, BaseColumns._ID,
-                COLUMN_NAME);
+                COLUMN_NAME
+        );
         public static final String SQL_DELETE_ENTRIES = String.format(
                 "DROP TABLE IF EXISTS %s", TABLE_NAME);
     }
@@ -88,7 +89,8 @@ public final class ManageProductContract {
                 COLUMN_CIF,
                 COLUMN_ADDRESS,
                 COLUMN_PHONENUMBER,
-                COLUMN_EMAIL);
+                COLUMN_EMAIL
+        );
         public static final String SQL_DELETE_ENTRIES = String.format(
                 "DROP TABLE IF EXISTS %s", TABLE_NAME);
     }
@@ -106,7 +108,8 @@ public final class ManageProductContract {
                         "%s TEXT NOT NULL)",
                 TABLE_NAME, BaseColumns._ID,
                 COLUMN_IDPHARMA, REFERENCE_ID_PHARMA,
-                COLUMN_DATE);
+                COLUMN_DATE
+        );
         public static final String SQL_DELETE_ENTRIES = String.format(
                 "DROP TABLE IF EXISTS %s", TABLE_NAME);
     }
@@ -133,7 +136,8 @@ public final class ManageProductContract {
                 COLUMN_IDINVOICE, REFERENCE_ID_INVOICE,
                 COLUMN_ORDERPRODUCT,
                 COLUMN_IDPRODUCT, REFERENCE_ID_PRODUCT,
-                COLUMN_PRICE);
+                COLUMN_PRICE
+        );
         public static final String SQL_DELETE_ENTRIES = String.format(
                 "DROP TABLE IF EXISTS %s", TABLE_NAME);
     }
