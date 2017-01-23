@@ -1,13 +1,13 @@
 package com.example.usuario.manageproductsdatabase.fragment;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -46,6 +46,8 @@ public class ListProductFragment extends Fragment implements ProductPresenter.Vi
         //En vez de devolver un objeto habla con el presentador
         //que habla con el repositorio según se le diga
         void showManageProduct(Bundle bundle);
+
+        void showListProduct(Bundle bundle);
     }
 
     private ListView listProducts;
@@ -57,7 +59,7 @@ public class ListProductFragment extends Fragment implements ProductPresenter.Vi
         super.onCreate(savedInstanceState);
 
         //Inicializamos el adaptador y el presentador
-        adapter = new ProductAdapter(getContext());
+        adapter = new ProductAdapter(this.getActivity());
         presenter = new ProductPresenterImpl(this);
 
         //Retiene la instancia del fragment
@@ -79,7 +81,7 @@ public class ListProductFragment extends Fragment implements ProductPresenter.Vi
         try {
             mCallBack = (ListProductListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(getContext().toString() +
+            throw new ClassCastException(this.toString() +
                     " ListProductListener must be implemented");
         }
     }
@@ -178,8 +180,8 @@ public class ListProductFragment extends Fragment implements ProductPresenter.Vi
     }
 
     //Métodos de la interfaz View
-    public void showProducts(List<Product> products) {
-        adapter.updateProduct(products);
+    public void showProducts(Product product) {
+        adapter.updateProduct(product);
     }
     private void hideList(boolean hidden) {
         listProducts.setVisibility(hidden ? View.GONE : View.VISIBLE);
@@ -192,12 +194,12 @@ public class ListProductFragment extends Fragment implements ProductPresenter.Vi
 
     }
 
-    //Implementado por decidir que el repositorio
-    //borre el adaptador
     @Override
-    public ProductAdapter getAdapter() {
-        return adapter;
+    public void showMessageDelete(Product product) {
+
     }
+
+    //Implementado por decidir que el repositorio
 
     @Override
     public void showMesageDelete(final Product product) {

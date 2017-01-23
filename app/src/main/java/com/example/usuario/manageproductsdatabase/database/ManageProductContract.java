@@ -110,6 +110,7 @@ public final class ManageProductContract {
                 COLUMN_IDPHARMA, REFERENCE_ID_PHARMA,
                 COLUMN_DATE
         );
+        //public static final String SQL_INSERT_ENTRIES = String.format()...
         public static final String SQL_DELETE_ENTRIES = String.format(
                 "DROP TABLE IF EXISTS %s", TABLE_NAME);
     }

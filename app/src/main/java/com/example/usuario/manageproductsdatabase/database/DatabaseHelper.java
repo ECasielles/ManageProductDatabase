@@ -1,9 +1,14 @@
 package com.example.usuario.manageproductsdatabase.database;
 
-import android.content.Context;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
+import android.util.Log;
+
+import com.example.usuario.manageproductsdatabase.resources.ManageProductApplication;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -14,17 +19,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //en caso de acceso concurrente entre hilos (uno en getInstance y otro en
     //acceso directo a la propiedad).
     private volatile static DatabaseHelper databaseHelper;
+    private AtomicInteger mOpenCounter;
+    private SQLiteDatabase mDatabase;
 
     //Usaremos el segundo constructor de los recomendados en la práctica, porque tiene el manejador
     //de errores de la BD (clase que permite manejar los mensajes de SQLite)
-    private DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    private DatabaseHelper() {
+        super(ManageProductApplication.getContext(), DATABASE_NAME, null, DATABASE_VERSION);
+        mOpenCounter = new AtomicInteger();
     }
 
     //Recordar que queremos un singleton para tener un objeto único
     //Además, no queremos que dos hilos abran la BD a la vez, por lo que
     //restringimos el acceso al getInstance.
-    public synchronized static DatabaseHelper getInstance(Context context) {
+    public synchronized static DatabaseHelper getInstance() {
         //El contexto lo vamos a necesitar siempre, para inicializar cosas
         if (databaseHelper == null)
             //Usamos getApplicationContext porque puede ser distinto al de la actividad
@@ -32,24 +40,72 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //Si ponemos el contexto de una actividad, esa actividad jamás se eliminaría
             //y lo que queremos es que lo que no se elimine nunca sea ESTA clase,
             //la conexión a la BD.
-            databaseHelper = new DatabaseHelper(context.getApplicationContext());
+            databaseHelper = new DatabaseHelper(ManageProductApplication.getContext());
         return databaseHelper;
     }
+    public synchronized SQLiteDatabase openDatabase() {
+        //Abre la base de datos para el acceso de los hilos asíncronos en concurrencia
+        //No confundir con onOpen, que se llama automáticamente
+        if (mOpenCounter.incrementAndGet() == 1)
+            //Garantizamos que el primer hilo siempre inicalice la variable
+            mDatabase = getWritableDatabase();
+        return mDatabase;
+    }
+    public synchronized void closeDatabase() {
+        //Garantiza que sólo se cierre la base de datos si el hilo que la cierra
+        //es el último hilo en consultar.
+        if (mOpenCounter.decrementAndGet() == 0)
+            mDatabase.close();
+        //En otros SGBD tenemos un objeto conexión (Oracle, etc.)
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         //Crearemos una sentencia SQL para crear toooodas las tablas
         //El objeto SQLiteDatabase es el que contiene todos los manejadores
         //Para crear las tablas llamamos a execSQL
         //IMPORTANTE: CUIDADO CON EL ORDEN, GUARDAR LAS REFERENCIAS
-        db.execSQL(ManageProductContract.CategoryEntry.SQL_CREATE_ENTRIES);
-        db.execSQL(ManageProductContract.ProductEntry.SQL_CREATE_ENTRIES);
+
+        db.beginTransaction();
+
+        try {
+            db.execSQL(ManageProductContract.CategoryEntry.SQL_CREATE_ENTRIES);
+            db.execSQL(ManageProductContract.CategoryEntry.SQL_INSERT_ENTRIES);
+            db.execSQL(ManageProductContract.InvoiceStatusEntry.SQL_CREATE_ENTRIES);
+            db.execSQL(ManageProductContract.InvoiceStatusEntry.SQL_INSERT_ENTRIES);
+            db.execSQL(ManageProductContract.ProductEntry.SQL_CREATE_ENTRIES);
+            db.execSQL(ManageProductContract.ProductEntry.SQL_INSERT_ENTRIES);
+            db.execSQL(ManageProductContract.PharmacyEntry.SQL_CREATE_ENTRIES);
+            db.execSQL(ManageProductContract.PharmacyEntry.SQL_INSERT_ENTRIES);
+            db.execSQL(ManageProductContract.InvoiceEntry.SQL_CREATE_ENTRIES);
+            db.execSQL(ManageProductContract.InvoiceEntry.SQL_INSERT_ENTRIES);
+            db.execSQL(ManageProductContract.InvoiceLineEntry.SQL_CREATE_ENTRIES);
+            db.execSQL(ManageProductContract.InvoiceLineEntry.SQL_INSERT_ENTRIES);
+            db.setTransactionSuccessful();
+        } catch (SQLException e) {
+            Log.e("manageproductdatabase", "Error al crear la base de datos: " + e.getMessage());
+        } finally {
+            db.endTransaction();
+        }
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //Eliminamos en orden inverso
-        db.execSQL(ManageProductContract.CategoryEntry.SQL_DELETE_ENTRIES);
-        db.execSQL(ManageProductContract.ProductEntry.SQL_DELETE_ENTRIES);
-        onCreate(db);
+        db.beginTransaction();
+        try {
+            db.execSQL(ManageProductContract.CategoryEntry.SQL_DELETE_ENTRIES);
+            db.execSQL(ManageProductContract.InvoiceStatusEntry.SQL_DELETE_ENTRIES);
+            db.execSQL(ManageProductContract.ProductEntry.SQL_DELETE_ENTRIES);
+            db.execSQL(ManageProductContract.PharmacyEntry.SQL_DELETE_ENTRIES);
+            db.execSQL(ManageProductContract.InvoiceEntry.SQL_DELETE_ENTRIES);
+            db.execSQL(ManageProductContract.InvoiceLineEntry.SQL_DELETE_ENTRIES);
+            onCreate(db);
+            db.setTransactionSuccessful();
+        } catch (SQLException e) {
+            Log.e("manageproductdatabase", "Error al actualizar la base de datos: " + e.getMessage());
+        } finally {
+            db.endTransaction();
+        }
     }
     //No debe hacerse. Lo mejor sería hacer un alter table.
     @Override
