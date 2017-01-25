@@ -35,6 +35,9 @@ public final class ManageProductContract {
         public static final String COLUMN_STOCK = "stock";
         public static final String COLUMN_IMAGE = "image";
         public static final String COLUMN_IDCATEGORY = "idCategory";
+        //Aquí guardamos toda la búsqueda
+        public static final String[] ALL_COLUMNS = new String[] { BaseColumns._ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_BRAND, COLUMN_DOSAGE, COLUMN_PRICE, COLUMN_STOCK, COLUMN_IMAGE, COLUMN_IDCATEGORY };
+
         public static final String REFERENCE_ID_CATEGORY = String.format(
                 "REFERENCES %s (%s) ON UPDATE CASCADE ON DELETE RESTRICT",
                 BaseColumns._ID, CategoryEntry.TABLE_NAME);
@@ -47,7 +50,7 @@ public final class ManageProductContract {
                         "%s REAL NOT NULL," +
                         "%s INT  NOT NULL," +
                         "%s TEXT NOT NULL," +
-                        "%s INT  NOT NULL %s)",
+                        "%s INT  NOT NULL %s);",
                 TABLE_NAME, BaseColumns._ID,
                 COLUMN_NAME,
                 COLUMN_DESCRIPTION,
@@ -59,19 +62,25 @@ public final class ManageProductContract {
                 COLUMN_IDCATEGORY, REFERENCE_ID_CATEGORY
         );
         public static final String SQL_DELETE_ENTRIES = String.format(
-                "DROP TABLE IF EXISTS %s", TABLE_NAME);
+                "DROP TABLE IF EXISTS %s;", TABLE_NAME);
+        public static final String SQL_INSERT_ENTRIES = String.format(
+                "INSERT INTO %s VALUES (%s, %s, %s, %s, %s, %s, %s);", TABLE_NAME, "Aspirina", "Dolor", "ASpFarma", "500mg", "12.50", "2", "1"
+        );
     }
     public static class InvoiceStatusEntry implements BaseColumns {
         public static final String TABLE_NAME = "invoiceStatus";
         public static final String COLUMN_NAME= "name";
         public static final String SQL_CREATE_ENTRIES = String.format(
                 " CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "%s TEXT NOT NULL)",
+                        "%s TEXT NOT NULL);",
                 TABLE_NAME, BaseColumns._ID,
                 COLUMN_NAME
         );
         public static final String SQL_DELETE_ENTRIES = String.format(
-                "DROP TABLE IF EXISTS %s", TABLE_NAME);
+                "DROP TABLE IF EXISTS %s;", TABLE_NAME);
+        public static final String SQL_INSERT_ENTRIES = String.format(
+                "INSERT INTO %s VALUES (%s);", TABLE_NAME, "Nombre Invoice"
+        );
     }
     public static class PharmacyEntry implements BaseColumns {
         public static final String TABLE_NAME = "pharmacy";
@@ -84,7 +93,7 @@ public final class ManageProductContract {
                         "%s TEXT NOT NULL," +
                         "%s TEXT NOT NULL," +
                         "%s TEXT NOT NULL," +
-                        "%s TEXT NOT NULL)",
+                        "%s TEXT NOT NULL);",
                 TABLE_NAME, BaseColumns._ID,
                 COLUMN_CIF,
                 COLUMN_ADDRESS,
@@ -92,7 +101,10 @@ public final class ManageProductContract {
                 COLUMN_EMAIL
         );
         public static final String SQL_DELETE_ENTRIES = String.format(
-                "DROP TABLE IF EXISTS %s", TABLE_NAME);
+                "DROP TABLE IF EXISTS %s;", TABLE_NAME);
+        public static final String SQL_INSERT_ENTRIES = String.format(
+                "INSERT INTO %s VALUES (%s, %s, %s, %s);", TABLE_NAME, "612352342F", "C/MiCalle", "662362234", "correo@farma1.com"
+        );
     }
     public static class InvoiceEntry implements BaseColumns {
         public static final String TABLE_NAME = "invoice";
@@ -105,14 +117,17 @@ public final class ManageProductContract {
                 " CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "%s TEXT NOT NULL," +
                         "%s INT  NOT NULL $s," +
-                        "%s TEXT NOT NULL)",
+                        "%s TEXT NOT NULL);",
                 TABLE_NAME, BaseColumns._ID,
                 COLUMN_IDPHARMA, REFERENCE_ID_PHARMA,
                 COLUMN_DATE
         );
         //public static final String SQL_INSERT_ENTRIES = String.format()...
         public static final String SQL_DELETE_ENTRIES = String.format(
-                "DROP TABLE IF EXISTS %s", TABLE_NAME);
+                "DROP TABLE IF EXISTS %s;", TABLE_NAME);
+        public static final String SQL_INSERT_ENTRIES = String.format(
+          "INSERT INTO %s VALUES (%s, %s);", TABLE_NAME, "1", "2017-1-25"
+        );
     }
 
     public static class InvoiceLineEntry implements BaseColumns {

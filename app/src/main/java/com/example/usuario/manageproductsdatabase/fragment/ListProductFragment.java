@@ -171,7 +171,7 @@ public class ListProductFragment extends Fragment implements ProductPresenter.Vi
                 //Aquí cada uno lo hace como quiera
                 dialog.setPresenter(presenter);
                 dialog.setArguments(bundle);
-                dialog.show(getActivity().getSupportFragmentManager(), "SimpleDialog");
+                dialog.show(getActivity(), "SimpleDialog");
                 return true;
             default:
                 return super.onContextItemSelected(item);

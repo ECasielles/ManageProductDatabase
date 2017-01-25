@@ -9,18 +9,18 @@ import com.example.usuario.manageproductsdatabase.database.DatabaseHelper;
 public class ManageProductApplication extends Application {
 
     private static ManageProductApplication manageProductApplication;
-    Context context;
 
     private ManageProductApplication() { }
 
     //Se pone el nombre getContext por compromiso pero no es óptimo
-    public static ManageProductApplication getContext() {
-        return manageProductApplication;
+    public static Context getContext() {
+        return manageProductApplication.getApplicationContext();
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        manageProductApplication = this;
         DatabaseHelper.getInstance().open();
     }
 }

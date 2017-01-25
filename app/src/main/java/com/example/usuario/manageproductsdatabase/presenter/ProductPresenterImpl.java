@@ -71,8 +71,12 @@ public class ProductPresenterImpl implements ConfirmDialog.OnDeleteProductListen
 
     @Override
     public void addProduct(Product product) {
-        repository.addProduct(product);
+        DatabaseManager.getInstance().addProduct(product);
         loadProducts();
+    }
+
+    @Override
+    public void onAddProduct(){
 
     }
 

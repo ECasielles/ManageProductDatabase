@@ -19,6 +19,16 @@ public class Product implements Comparable<Product>, Parcelable, IProduct {
     private int mStock;
     private int mImage;
 
+    public int getmCategory() {
+        return mCategory;
+    }
+
+    public void setmCategory(int mCategory) {
+        this.mCategory = mCategory;
+    }
+
+    private int mCategory;
+
     public static final Comparator<Product> NAME_COMPARATOR = new Comparator<Product>() {
         @Override
         public int compare(Product p1, Product p2) {
@@ -63,6 +73,7 @@ public class Product implements Comparable<Product>, Parcelable, IProduct {
         mImage = in.readInt();
     }
 
+    public Product() { }
 
     public Product(String mName, String mDescription, String mDosage, String mBrand, double mPrice, int mStock, int mImage) {
         //this.mId = UUID.randomUUID(); es para saber que nos puede dar UUID de forma automática
