@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.usuario.manageproductsdatabase.R;
+import com.example.usuario.manageproductsdatabase.database.DatabaseManager;
+import com.example.usuario.manageproductsdatabase.fragment.ListProductFragment;
 import com.example.usuario.manageproductsdatabase.model.Product;
 import com.example.usuario.manageproductsdatabase.repository.ProductRepository;
 
@@ -21,8 +23,10 @@ public class ProductAdapter extends ArrayAdapter<Product> {
     private static boolean SORTED_ASC = false;
 
     public ProductAdapter(Context context) {
-        // El ArrayList interno es igual al que se obtiene con getProducts
-        super(context, R.layout.item_product, (List<Product>) ProductRepository.getInstance());
+        super(context, R.layout.item_product, DatabaseManager.getInstance().getAllProducts());
+    }
+    public ProductAdapter(Context context, List<Product> products) {
+        super(context, R.layout.item_product, products);
     }
 
     // Ejemplo de método de filtrado que debe ir en el constructor

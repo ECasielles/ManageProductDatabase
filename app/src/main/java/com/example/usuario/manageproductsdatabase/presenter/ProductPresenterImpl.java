@@ -1,6 +1,8 @@
 package com.example.usuario.manageproductsdatabase.presenter;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 
 import com.example.usuario.manageproductsdatabase.database.DatabaseHelper;
 import com.example.usuario.manageproductsdatabase.database.DatabaseManager;
@@ -26,6 +28,13 @@ public class ProductPresenterImpl implements ConfirmDialog.OnDeleteProductListen
         //Construiremos un ArrayList desde la BD
         ArrayList<Product> products = new ArrayList<Product>();
         return null;
+    }
+
+    @Override
+    product void addProduct(ArrayList<Product> listProducts) {
+        for (Product products: listProducts) {
+
+        }
     }
 
     //Este método es importantísimo a la hora de paginar
@@ -78,6 +87,29 @@ public class ProductPresenterImpl implements ConfirmDialog.OnDeleteProductListen
     @Override
     public void onAddProduct(){
 
+    }
+
+    public void getAllProducts() {
+        new AsyncTask<Void, Void, ArrayList<Product>>(){
+            ProgressDialog progressDialog = new ProgressDialog(view.getContext());
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                progressDialog.setMessage("Cargando ...");
+                progressDialog.show();
+            }
+
+            @Override
+            protected ArrayList<Product> doInBackground(Void... voids) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return DatabaseManager.getInstance().getAllProducts();
+            }
+        }
     }
 
 }

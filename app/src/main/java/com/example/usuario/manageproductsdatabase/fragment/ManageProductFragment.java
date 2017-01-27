@@ -1,10 +1,13 @@
 package com.example.usuario.manageproductsdatabase.fragment;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.icu.util.ULocale;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +15,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.usuario.manageproductsdatabase.R;
+import com.example.usuario.manageproductsdatabase.adapter.AdapterCategory;
+import com.example.usuario.manageproductsdatabase.interfaces.CategoryPresenter;
 import com.example.usuario.manageproductsdatabase.interfaces.IProduct;
+import com.example.usuario.manageproductsdatabase.interfaces.ManagePresenter;
 import com.example.usuario.manageproductsdatabase.model.Product;
 
-public class ManageProductFragment extends Fragment implements IProduct.View{
+public class ManageProductFragment extends Fragment implements ManagePresenter.View, CategoryPresenter.View{
 
     private Product product;
     private ImageView imageView;
@@ -28,11 +34,12 @@ public class ManageProductFragment extends Fragment implements IProduct.View{
     private Button btnAction;
     private boolean addAction;
     private ManageProductListener mCallBack;
+    private AdapterCategory adapterCategory;
 
     public interface ManageProductListener {
+
         void showListProduct();
     }
-
     //Singleton que evita la duplicidad de gestores
     public static ManageProductFragment getInstance(Bundle args) {
         ManageProductFragment fragment = new ManageProductFragment();
@@ -41,7 +48,6 @@ public class ManageProductFragment extends Fragment implements IProduct.View{
         return fragment;
     }
 
-    //Faltaba terminar el onAttach
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -50,6 +56,19 @@ public class ManageProductFragment extends Fragment implements IProduct.View{
         } catch (ClassCastException ex) {
             throw new ClassCastException(ex.getMessage() + " activity must implement ManageProductListener");
         }
+    }
+
+
+    @Override
+    public void onDetach() {
+        mCallBack = null;
+        adapterCategory = null;
+        super.onDetach();
+    }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -63,6 +82,7 @@ public class ManageProductFragment extends Fragment implements IProduct.View{
             //Nuevo producto
             product = new Product("Nombre", "Descripción", "Dosis", "Marca", 0.0d, 0, R.drawable.pill);
     }
+
 
     @Nullable
     @Override
@@ -130,16 +150,32 @@ public class ManageProductFragment extends Fragment implements IProduct.View{
     }
 
     private void saveProduct() {
-        if(product == null)
-            product = new Product("Nombre", "Descripción", "Dosis", "Marca", 0.0d, 0, R.drawable.pill);
-        product.setmName(tilName.getEditText().getText().toString());
-        product.setmDescription(tilDescription.getEditText().getText().toString());
-        product.setmBrand(tilBrand.getEditText().getText().toString());
-        product.setmDosage(tilDosage.getEditText().getText().toString());
-        product.setmPrice(Double.parseDouble(tilPrice.getEditText().getText().toString()));
-        product.setmStock(Integer.parseInt(tilPrice.getEditText().getText().toString()));
+        Product productNew;
+        //int id = spCategory.getAdapter();   //<- Spinner
+        Cursor cursor = ((SimpleCursorAdapter) spCategory.getAdapter()).getCursor();
+        cursor.moveToPosition(spCategory.getSelectedItemPosition());
 
-        mCallBack.showListProduct();
+        if(addAction) {
+            productNew = new Product(tilName.getEditText().getText().toString(), tilDescription.getEditText().getText().toString(), tilBrand.getEditText().getText().toString(), tilDosage.getEditText().getText().toString(), Double.parseDouble(tilPrice.getEditText().getText().toString()), Integer.parseInt(tilStock.getEditText().getText().toString()));
+            managePresenter.addProduct(productNew);
+        } else {
+            //productNew = new Product(product.getmId()...);
+            managePresenter.addProduct(productNew);
+        }
+
+        mCallBack.onListProductListener();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        //Tomamos las categorías y le pasamos el adapter
+        CategoryPresenter.setCursorCategory();
+    }
+
+    @Override
+    public void setCursorCategory(Cursor cursor) {
+        //changeCursor cierra el cursor tras el acceso
+        adapterCategory.changeCursor(cursor);
+    }
 }

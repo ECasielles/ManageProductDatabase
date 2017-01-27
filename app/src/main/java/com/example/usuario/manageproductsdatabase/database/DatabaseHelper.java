@@ -29,6 +29,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         mOpenCounter = new AtomicInteger();
     }
 
+    /*
+    Esta parte corresponde al uso de mapeo y no se usa con los cursores
+
     //Recordar que queremos un singleton para tener un objeto único
     //Además, no queremos que dos hilos abran la BD a la vez, por lo que
     //restringimos el acceso al getInstance.
@@ -59,6 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //En otros SGBD tenemos un objeto conexión (Oracle, etc.)
     }
 
+    */
     @Override
     public void onCreate(SQLiteDatabase db) {
         //Crearemos una sentencia SQL para crear toooodas las tablas

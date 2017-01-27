@@ -11,6 +11,7 @@ import com.example.usuario.manageproductsdatabase.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CyclicBarrier;
 
 //Manejadora de las operaciones de tareas asíncronas
 public class DatabaseManager {
@@ -104,7 +105,12 @@ public class DatabaseManager {
         DatabaseHelper.getInstance().closeDatabase();
     }
 
+    //getAllCategories
+    public Cursor getAllCategories() {
+        SQLiteDatabase sqLiteDatabase = DatabaseHelper.getInstance().openDatabase();
+        Cursor cursor = sqLiteDatabase.query(ManageProductContract.CategoryEntry.TABLE_NAME, ManageProductContract.CategoryEntry.GET_ALL_COLUMMS, null, null, null, null, null);
 
+    }
 
 
 }

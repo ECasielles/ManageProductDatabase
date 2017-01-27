@@ -5,4 +5,8 @@ package com.example.usuario.manageproductsdatabase.interfaces;
  */
 
 public interface ManagePresenter {
+
+    interface View {
+
+    }
 }

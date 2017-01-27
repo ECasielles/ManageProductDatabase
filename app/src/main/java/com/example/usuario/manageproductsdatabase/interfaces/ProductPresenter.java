@@ -1,5 +1,7 @@
 package com.example.usuario.manageproductsdatabase.interfaces;
 
+import android.content.Context;
+
 import com.example.usuario.manageproductsdatabase.model.Product;
 
 import java.util.List;
@@ -21,6 +23,8 @@ public interface ProductPresenter {
         void showMessage(String message);
 
         void showMessageDelete(final Product product);
+
+        Context getContext();
     }
 
 }

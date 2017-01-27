@@ -42,7 +42,10 @@ public class ListProductFragment extends Fragment implements ProductPresenter.Vi
 
     //No permitimos que un Fragment llame a otro
     //Lo va a gestionar la actividad
-    public interface ListProductListener {
+    public interface ListProductListener {public ProductAdapter(Context context) {
+        // El ArrayList interno es igual al que se obtiene con getProducts
+        super(context, R.layout.item_product, (List<Product>) ProductRepository.getInstance());
+    }
         //En vez de devolver un objeto habla con el presentador
         //que habla con el repositorio según se le diga
         void showManageProduct(Bundle bundle);

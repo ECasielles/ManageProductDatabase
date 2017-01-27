@@ -24,6 +24,7 @@ public final class ManageProductContract {
         public static final String SQL_DELETE_ENTRIES = String.format(
                 "DROP TABLE IF EXISTS %s", TABLE_NAME);
 
+        public static final String[] GET_ALL_COLUMMS = new String[] { BaseColumns._ID, COLUMN_NAME};
     }
     public static class ProductEntry implements BaseColumns {
         public static final String TABLE_NAME = "product";
@@ -64,7 +65,20 @@ public final class ManageProductContract {
         public static final String SQL_DELETE_ENTRIES = String.format(
                 "DROP TABLE IF EXISTS %s;", TABLE_NAME);
         public static final String SQL_INSERT_ENTRIES = String.format(
-                "INSERT INTO %s VALUES (%s, %s, %s, %s, %s, %s, %s);", TABLE_NAME, "Aspirina", "Dolor", "ASpFarma", "500mg", "12.50", "2", "1"
+                "INSERT INTO %s" +
+                        " VALUES (%s, %s, %s, %s, %s, %s, %s)," +
+                        " VALUES (%s, %s, %s, %s, %s, %s, %s)," +
+                        " VALUES (%s, %s, %s, %s, %s, %s, %s)," +
+                        " VALUES (%s, %s, %s, %s, %s, %s, %s)," +
+                        " VALUES (%s, %s, %s, %s, %s, %s, %s)," +
+                        " VALUES (%s, %s, %s, %s, %s, %s, %s),",
+                TABLE_NAME,
+                "Aspirina", "Dolor", "ASpFarma", "500mg", "12.50", "2", "1",
+                "Aspirina", "Dolor", "ASpFarma", "500mg", "12.50", "2", "1",
+                "Aspirina", "Dolor", "ASpFarma", "500mg", "12.50", "2", "1",
+                "Aspirina", "Dolor", "ASpFarma", "500mg", "12.50", "2", "1",
+                "Aspirina", "Dolor", "ASpFarma", "500mg", "12.50", "2", "1",
+                "Aspirina", "Dolor", "ASpFarma", "500mg", "12.50", "2", "1"
         );
     }
     public static class InvoiceStatusEntry implements BaseColumns {
