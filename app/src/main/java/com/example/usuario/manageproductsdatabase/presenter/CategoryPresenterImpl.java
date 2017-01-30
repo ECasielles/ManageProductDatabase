@@ -13,6 +13,7 @@ import com.example.usuario.manageproductsdatabase.cursor.CategoryCursorLoader;
 import com.example.usuario.manageproductsdatabase.interfaces.CategoryPresenter;
 
 public class CategoryPresenterImpl implements CategoryPresenter, LoaderManager.LoaderCallbacks<Cursor> {
+
     private CategoryPresenter.View view;
     private final static int CATEGORY = 1;
     private Context context;
@@ -23,7 +24,7 @@ public class CategoryPresenterImpl implements CategoryPresenter, LoaderManager.L
     }
 
     @Override
-    public void getAllCategory() {
+    public void getAllCategories() {
         //Cursor cursor = DatabaseManager.getInstance().getAllCategories();
         //adapter.swapCursor(cursor);
         //ó
@@ -34,15 +35,15 @@ public class CategoryPresenterImpl implements CategoryPresenter, LoaderManager.L
         ((Activity)context).getLoaderManager().initLoader(CATEGORY, null, this); //<-Inicializamos un cargador en el presenter
     }
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Loader<Cursor> loader = null;
-        switch (id){
-            case CATEGORY:
-                //Si usaramos contentProvider pasariamos la uri
-                loader = new CategoryCursorLoader(context);  //<-Podemos hacerlo directamente del fragment
-                break;
-        }
-        return loader;
+        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            Loader<Cursor> loader = null;
+            switch (id){
+                case CATEGORY:
+                    //Si usaramos contentProvider pasariamos la uri
+                    loader = new CategoryCursorLoader(context);  //<-Podemos hacerlo directamente del fragment
+                    break;
+            }
+            return loader;
     }
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {

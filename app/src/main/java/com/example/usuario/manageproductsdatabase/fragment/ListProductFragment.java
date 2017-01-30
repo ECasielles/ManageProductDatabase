@@ -115,7 +115,7 @@ public class ListProductFragment extends Fragment implements ProductPresenter.Vi
         }
         );
 
-        emptyProduct = (TextView) rootView.findViewById(R.id.empty);
+        emptyProduct = (TextView) rootView.findViewById(R.id.listProductsTxv);
 
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fabAdd);
         fab.setOnClickListener(new View.OnClickListener() {

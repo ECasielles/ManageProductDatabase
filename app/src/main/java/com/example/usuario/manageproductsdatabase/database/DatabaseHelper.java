@@ -10,7 +10,6 @@ import com.example.usuario.manageproductsdatabase.resources.ManageProductApplica
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 1;
@@ -64,69 +63,69 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     */
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
         //Crearemos una sentencia SQL para crear toooodas las tablas
         //El objeto SQLiteDatabase es el que contiene todos los manejadores
         //Para crear las tablas llamamos a execSQL
         //IMPORTANTE: CUIDADO CON EL ORDEN, GUARDAR LAS REFERENCIAS
 
-        db.beginTransaction();
+        sqLiteDatabase.beginTransaction();
 
         try {
-            db.execSQL(ManageProductContract.CategoryEntry.SQL_CREATE_ENTRIES);
-            db.execSQL(ManageProductContract.CategoryEntry.SQL_INSERT_ENTRIES);
-            db.execSQL(ManageProductContract.InvoiceStatusEntry.SQL_CREATE_ENTRIES);
-            db.execSQL(ManageProductContract.InvoiceStatusEntry.SQL_INSERT_ENTRIES);
-            db.execSQL(ManageProductContract.ProductEntry.SQL_CREATE_ENTRIES);
-            db.execSQL(ManageProductContract.ProductEntry.SQL_INSERT_ENTRIES);
-            db.execSQL(ManageProductContract.PharmacyEntry.SQL_CREATE_ENTRIES);
-            db.execSQL(ManageProductContract.PharmacyEntry.SQL_INSERT_ENTRIES);
-            db.execSQL(ManageProductContract.InvoiceEntry.SQL_CREATE_ENTRIES);
-            db.execSQL(ManageProductContract.InvoiceEntry.SQL_INSERT_ENTRIES);
-            db.execSQL(ManageProductContract.InvoiceLineEntry.SQL_CREATE_ENTRIES);
-            db.execSQL(ManageProductContract.InvoiceLineEntry.SQL_INSERT_ENTRIES);
-            db.setTransactionSuccessful();
+            sqLiteDatabase.execSQL(ManageProductContract.CategoryEntry.SQL_CREATE_ENTRIES);
+            sqLiteDatabase.execSQL(ManageProductContract.CategoryEntry.SQL_INSERT_ENTRIES);
+            sqLiteDatabase.execSQL(ManageProductContract.InvoiceStatusEntry.SQL_CREATE_ENTRIES);
+            sqLiteDatabase.execSQL(ManageProductContract.InvoiceStatusEntry.SQL_INSERT_ENTRIES);
+            sqLiteDatabase.execSQL(ManageProductContract.ProductEntry.SQL_CREATE_ENTRIES);
+            sqLiteDatabase.execSQL(ManageProductContract.ProductEntry.SQL_INSERT_ENTRIES);
+            sqLiteDatabase.execSQL(ManageProductContract.PharmacyEntry.SQL_CREATE_ENTRIES);
+            sqLiteDatabase.execSQL(ManageProductContract.PharmacyEntry.SQL_INSERT_ENTRIES);
+            sqLiteDatabase.execSQL(ManageProductContract.InvoiceEntry.SQL_CREATE_ENTRIES);
+            sqLiteDatabase.execSQL(ManageProductContract.InvoiceEntry.SQL_INSERT_ENTRIES);
+            sqLiteDatabase.execSQL(ManageProductContract.InvoiceLineEntry.SQL_CREATE_ENTRIES);
+            sqLiteDatabase.execSQL(ManageProductContract.InvoiceLineEntry.SQL_INSERT_ENTRIES);
+            sqLiteDatabase.setTransactionSuccessful();
         } catch (SQLException e) {
             Log.e("manageproductdatabase", "Error al crear la base de datos: " + e.getMessage());
         } finally {
-            db.endTransaction();
+            sqLiteDatabase.endTransaction();
         }
     }
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         //Eliminamos en orden inverso
-        db.beginTransaction();
+        sqLiteDatabase.beginTransaction();
         try {
-            db.execSQL(ManageProductContract.CategoryEntry.SQL_DELETE_ENTRIES);
-            db.execSQL(ManageProductContract.InvoiceStatusEntry.SQL_DELETE_ENTRIES);
-            db.execSQL(ManageProductContract.ProductEntry.SQL_DELETE_ENTRIES);
-            db.execSQL(ManageProductContract.PharmacyEntry.SQL_DELETE_ENTRIES);
-            db.execSQL(ManageProductContract.InvoiceEntry.SQL_DELETE_ENTRIES);
-            db.execSQL(ManageProductContract.InvoiceLineEntry.SQL_DELETE_ENTRIES);
-            onCreate(db);
-            db.setTransactionSuccessful();
+            sqLiteDatabase.execSQL(ManageProductContract.CategoryEntry.SQL_DELETE_ENTRIES);
+            sqLiteDatabase.execSQL(ManageProductContract.InvoiceStatusEntry.SQL_DELETE_ENTRIES);
+            sqLiteDatabase.execSQL(ManageProductContract.ProductEntry.SQL_DELETE_ENTRIES);
+            sqLiteDatabase.execSQL(ManageProductContract.PharmacyEntry.SQL_DELETE_ENTRIES);
+            sqLiteDatabase.execSQL(ManageProductContract.InvoiceEntry.SQL_DELETE_ENTRIES);
+            sqLiteDatabase.execSQL(ManageProductContract.InvoiceLineEntry.SQL_DELETE_ENTRIES);
+            onCreate(sqLiteDatabase);
+            sqLiteDatabase.setTransactionSuccessful();
         } catch (SQLException e) {
             Log.e("manageproductdatabase", "Error al actualizar la base de datos: " + e.getMessage());
         } finally {
-            db.endTransaction();
+            sqLiteDatabase.endTransaction();
         }
     }
     //No debe hacerse. Lo mejor sería hacer un alter table.
     @Override
-    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //super.onDowngrade(db, oldVersion, newVersion); <- no es necesario llamarlo
+    public void onDowngrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+        //super.onDowngrade(sqLiteDatabase, oldVersion, newVersion); <- no es necesario llamarlo
         //Normalmente degradamos a la versión anterior
-        onUpgrade(db, newVersion, oldVersion);
+        onUpgrade(sqLiteDatabase, newVersion, oldVersion);
     }
     @Override
-    public void onOpen(SQLiteDatabase db) {
-        super.onOpen(db);
+    public void onOpen(SQLiteDatabase sqLiteDatabase) {
+        super.onOpen(sqLiteDatabase);
         //Si no es de lectura realizamos la comprobación de la compilación
-        if(!db.isReadOnly())
+        if(!sqLiteDatabase.isReadOnly())
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-                db.setForeignKeyConstraintsEnabled(true);
+                sqLiteDatabase.setForeignKeyConstraintsEnabled(true);
             else
-                db.execSQL("PRAGMA foreign_keys = ON");
+                sqLiteDatabase.execSQL("PRAGMA foreign_keys = ON");
     }
     //Encapsulamos el método para abrirla BD en modo escritura
     public SQLiteDatabase open() {

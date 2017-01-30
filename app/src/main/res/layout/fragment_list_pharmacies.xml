@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:id="@+id/activity_products"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.usuario.manageproductsdatabase.fragment.ListProductFragment">
+    >
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/listActivityProducts"
+        android:id="@+id/listActivityPharmacies"
         />
 
     <TextView
-        android:id="@+id/listProductsTxv"
+        android:id="@+id/listPharmaciesTxv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/nodata"
@@ -24,7 +22,6 @@
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/fabAdd"
-        />
+        android:id="@+id/fabAdd"/>
 
 </RelativeLayout>

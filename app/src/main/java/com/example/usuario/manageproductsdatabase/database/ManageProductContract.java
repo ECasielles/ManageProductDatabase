@@ -36,6 +36,11 @@ public final class ManageProductContract {
         public static final String COLUMN_STOCK = "stock";
         public static final String COLUMN_IMAGE = "image";
         public static final String COLUMN_IDCATEGORY = "idCategory";
+        //Claves foráneas
+        public static final String PRODUCT_JOIN_CATEGORY = String.format("%s INNER JOIN %s ON %s = %s.%s",
+                TABLE_NAME, CategoryEntry.TABLE_NAME, COLUMN_IDCATEGORY, CategoryEntry.TABLE_NAME, BaseColumns._ID);
+        public static final String[] COLUMNS_PRODUCT_JOIN_CATEGORY = new String[]{
+                TABLE_NAME+"."+COLUMN_NAME,COLUMN_DESCRIPTION, CategoryEntry.TABLE_NAME+"."+CategoryEntry.COLUMN_NAME};
         //Aquí guardamos toda la búsqueda
         public static final String[] ALL_COLUMNS = new String[] { BaseColumns._ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_BRAND, COLUMN_DOSAGE, COLUMN_PRICE, COLUMN_STOCK, COLUMN_IMAGE, COLUMN_IDCATEGORY };
 

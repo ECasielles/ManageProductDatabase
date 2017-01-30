@@ -120,7 +120,7 @@ public class MultiListProductFragment extends Fragment implements ProductPresent
         });
 
 
-        emptyProduct = (TextView) rootView.findViewById(R.id.empty);
+        emptyProduct = (TextView) rootView.findViewById(R.id.listProductsTxv);
 
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fabAdd);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -188,8 +188,6 @@ public class MultiListProductFragment extends Fragment implements ProductPresent
     public void showMessage(String message) {
 
     }
-
-
     @Override
     public void showMessageDelete(final Product product) {
         Snackbar.make(getView(), "Producto eliminado", Snackbar.LENGTH_LONG).setAction("UNDO", new View.OnClickListener() {

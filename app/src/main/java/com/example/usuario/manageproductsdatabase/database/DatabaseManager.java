@@ -2,16 +2,16 @@ package com.example.usuario.manageproductsdatabase.database;
 
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 import com.example.usuario.manageproductsdatabase.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CyclicBarrier;
 
 //Manejadora de las operaciones de tareas asíncronas
 public class DatabaseManager {
@@ -59,9 +59,33 @@ public class DatabaseManager {
                 products.add(product);
             } while (cursor.moveToNext());
         }
+
+        //Cierro el cursor
+        cursor.close();
+
+        //Vamos a mostrar en el Log la unión de cada producto y categoría
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        queryBuilder.setTables(ManageProductContract.ProductEntry.PRODUCT_JOIN_CATEGORY);
+
+        //Reutilizo el cursor
+        cursor = queryBuilder.query(
+                sqLiteDatabase,
+                ManageProductContract.ProductEntry.COLUMNS_PRODUCT_JOIN_CATEGORY,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        if (cursor.moveToFirst()) {
+            do {
+                Log.e("manageproductdatabase", cursor.getString(0) + ", " + cursor
+                .getString(1) + " -> " + cursor.getString(2));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
         DatabaseHelper.getInstance().closeDatabase();
-
-
         return products;
     }
     public void deleteProduct (Product product) {
@@ -110,9 +134,15 @@ public class DatabaseManager {
         SQLiteDatabase sqLiteDatabase = DatabaseHelper.getInstance().openDatabase();
         Cursor cursor = sqLiteDatabase.query(ManageProductContract.CategoryEntry.TABLE_NAME, ManageProductContract.CategoryEntry.GET_ALL_COLUMMS, null, null, null, null, null);
 
+        return cursor;
     }
 
 
+    public Cursor getAllPharmacies() {
+        SQLiteDatabase sqLiteDatabase = DatabaseHelper.getInstance().openDatabase();
+        Cursor cursor = sqLiteDatabase.query(ManageProductContract.PharmacyEntry.TABLE_NAME, ManageProductContract.PharmacyEntry.GET_ALL_COLUMMS, null, null, null, null, null);
+        return cursor;
+    }
 }
 
 
