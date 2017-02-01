@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 
 import com.example.usuario.manageproductsdatabase.cursor.CategoryCursorLoader;
+import com.example.usuario.manageproductsdatabase.cursor.PharmacyCursorLoader;
 import com.example.usuario.manageproductsdatabase.interfaces.CategoryPresenter;
 import com.example.usuario.manageproductsdatabase.interfaces.ListPharmaciesPresenter;
 
@@ -23,8 +24,6 @@ public class ListPharmaciesPresenterImpl implements ListPharmaciesPresenter, Loa
         this.context = view.getContext();
     }
 
-    ListPharmaciesPresenter
-
     @Override
     public void getPharmacies() {
         ((Activity)context).getLoaderManager().initLoader(LIST_PHARMACIES, null, this);
@@ -32,13 +31,7 @@ public class ListPharmaciesPresenterImpl implements ListPharmaciesPresenter, Loa
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Loader<Cursor> cursorLoader = null;
-        switch (id){
-            case LIST_PHARMACIES:
-                cursorLoader = new CategoryCursorLoader(context);
-                break;
-        }
-        return cursorLoader;
+        return new PharmacyCursorLoader(context);
 
     }
     @Override

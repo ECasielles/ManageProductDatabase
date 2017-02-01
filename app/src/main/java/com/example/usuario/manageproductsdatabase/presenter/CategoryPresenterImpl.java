@@ -54,4 +54,11 @@ public class CategoryPresenterImpl implements CategoryPresenter, LoaderManager.L
     public void onLoaderReset(Loader<Cursor> loader) {
         view.setCursorCategory(null);
     }
+
+    //Método que recarga el cursor con todo junto (por Lourdes) <------Mover a clase ListPresenter
+    public void restartLoader(int loader) {
+        ((Activity) view.getContext()).getLoaderManager().restartLoader(loader, null, this);
+    }
+
+
 }
